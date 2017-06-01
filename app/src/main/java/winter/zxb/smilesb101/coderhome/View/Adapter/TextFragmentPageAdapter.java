@@ -45,13 +45,13 @@ public class TextFragmentPageAdapter extends BaseFragmentPagerAdapter{
 
 	@Override
 	public int getCount(){
-		Log.i(TAG,"getPageTitle: 获取数量"+typesList.size());
+		Log.i(TAG,"getPageTitle: 获取数量 "+typesList.size());
 		return typesList.size();
 	}
 
 	@Override
 	public CharSequence getPageTitle(int position){
-		Log.i(TAG,"getPageTitle: 获取标题"+typesList.get(position));
+		Log.i(TAG,"getPageTitle: 获取标题 "+typesList.get(position));
 		return typesList.get(position);
 	}
 }

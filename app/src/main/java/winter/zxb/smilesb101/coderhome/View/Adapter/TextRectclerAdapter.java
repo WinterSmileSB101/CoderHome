@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.databinding.library.baseAdapters.BR;
+
 import java.util.ArrayList;
 
 import winter.zxb.smilesb101.coderhome.Bean.TextGanioBean;
@@ -49,7 +51,7 @@ public class TextRectclerAdapter extends RecyclerView.Adapter{
 	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,int viewType){
 		//Log.i(TAG,"onCreateViewHolder: 创建ViewHolder："+textGanioBeanArrayList.size());
 		context = parent.getContext();
-		TextItemLayoutBinding dataBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.text_item_layout,parent,false);//Databinding的绑定实例化
+		ViewDataBinding dataBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.text_item_layout,parent,false);//Databinding的绑定实例化
 		rootView = dataBinding.getRoot();
 		TextRectclerAdapter.viewHolder viewHolder = new viewHolder(rootView);
 		viewHolder.setBinding(dataBinding);//传递到holder中进行绑定
@@ -61,9 +63,9 @@ public class TextRectclerAdapter extends RecyclerView.Adapter{
 		TextRectclerAdapter.viewHolder holder1 = (viewHolder)holder;
 	//  Log.i(TAG,"onBindViewHolder: "+ textGanioBeanArrayList.get(position).getDesc());
 		final TextGanioBean bean = textGanioBeanArrayList.get(position);
-		holder1.getDataBinding().setGanioItem(bean);//绑定数据
+		holder1.getDataBinding().setVariable(BR.GanioItem,bean);//绑定数据
 
-		holder1.getDataBinding().setClickListener(new View.OnClickListener(){
+		holder1.getDataBinding().setVariable(BR.clickLinstener,new View.OnClickListener(){
 			@Override
 			public void onClick(View v){
 				Intent intent = new Intent(activity,GanioDetailsActivity.class);
@@ -82,17 +84,17 @@ public class TextRectclerAdapter extends RecyclerView.Adapter{
 	}
 
 	class viewHolder extends RecyclerView.ViewHolder{
-		private TextItemLayoutBinding dataBinding;
+		private ViewDataBinding dataBinding;
 		TextView desc;
 		public viewHolder(View itemView){
 			super(itemView);
 			desc = (TextView)rootView.findViewById(R.id.desc);
 		}
-		public void setBinding(TextItemLayoutBinding dataBinding)
+		public void setBinding(ViewDataBinding dataBinding)
 		{
 			this.dataBinding = dataBinding;
 		}
-		public TextItemLayoutBinding getDataBinding()
+		public ViewDataBinding getDataBinding()
 		{
 			return this.dataBinding;
 		}

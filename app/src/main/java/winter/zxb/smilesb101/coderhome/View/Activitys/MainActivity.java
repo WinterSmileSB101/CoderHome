@@ -193,13 +193,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			return fragmentList.get(position);
 		}
 
-		@Override
-		public boolean isViewFromObject(View view,Object object){
-			return false;
-		}
-
 		public ArrayList<Integer> getTitleImages(){
 			return titleImages;
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position){
+			return "";
 		}
 
 		public ArrayList<String> getTitles(){
