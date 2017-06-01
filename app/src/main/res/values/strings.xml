@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">码农之家</string>
+
+    <string name="action_settings">设置</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="type_format">类型：%s</string>
+    <string name="athor_format">作者：%s</string>
+    <string name="publishAt_format">发布于：%s</string>
+    <string name="GanioName">干 货</string>
+    <string name="ZhiHuName">知 乎</string>
+    <string name="MusicName">音 乐</string>
+    <string name="ZiXunName">资 讯</string>
+    <string name="NewsName">新 闻</string>
+    <string name="doubanName">豆 瓣</string>
+    <string name="ComicName">漫 画 - 小 说</string>
+    <string name="title_item_list">Items</string>
+    <string name="title_item_detail">Item Detail</string>
+</resources>

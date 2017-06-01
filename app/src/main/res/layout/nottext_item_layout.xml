@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--dataBinding需要的布局-->
+<layout>
+    <!--数据绑定部分-->
+    <data>
+        <!--变量申明 使用就是使用@{} 然后中间和代码中使用变量方式一样-->
+        <variable
+            name="item"
+            type="winter.zxb.smilesb101.coderhome.Bean.NotTextGanioBean"/>
+    </data>
+    <!--原来的布局-->
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left_right_page"
+            android:layout_marginRight="@dimen/margin_left_right_page"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@{item.desc}"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
+                <TextView
+                    android:id="@+id/comfrom"
+                    android:textColor="@color/colorGray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="@{item.type}"/>
+                <TextView
+                    android:id="@+id/athour"
+                    android:textColor="@color/colorGray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="@{item.who}"/>
+                <TextView
+                    android:textColor="@color/colorGray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="3dp"
+                    android:text="@{item.publishedAt}"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorGray"></LinearLayout>
+
+    </LinearLayout>
+
+</layout>

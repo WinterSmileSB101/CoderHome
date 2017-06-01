@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+<data>
+    <variable
+        name="adapter"
+        type="winter.zxb.smilesb101.coderhome.View.Adapter.BaseFragmentPagerAdapter"/>
+</data>
+
+<LinearLayout
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+<android.support.design.widget.TabLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    app:tabIndicatorColor="@color/colorDarkRed"
+    app:tabSelectedTextColor="@color/colorDarkRed"
+    app:tabTextColor="@color/colorBlack"
+    app:tabIndicatorHeight="0.5dp"
+    android:id="@+id/tablayout"></android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:adapter="@{adapter}"
+        android:id="@+id/viewPager"></android.support.v4.view.ViewPager>
+</LinearLayout>
+</layout>

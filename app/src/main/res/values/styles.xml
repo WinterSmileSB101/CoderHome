@@ -1,0 +1,40 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorRed</item>
+        <item name="colorPrimaryDark">@color/colorDarkRed</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!--状态栏沉浸-->
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <!--白色前景的状态栏样式-->
+    <style name="ligthToolBar" parent="AlertDialog.AppCompat.Light">
+        <item name="android:textColor">@color/colorWrite</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <!--白色背景，黑色前景的弹出栏-->
+    <style name="OverFlowMenuTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- 设置Menu菜单的背景色 -->
+        <item name="android:itemBackground">@android:color/white</item>
+        <!-- 设置Menu菜单的字体颜色 -->
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <!-- 设置Menu窗口不覆盖Toolbar视图 -->
+        <item name="overlapAnchor">false</item>
+    </style>
+    <!--collapasing状态栏的小号白色标题外表-->
+    <style name="collpasCustom" parent="TextAppearance.Design.CollapsingToolbar.Expanded">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+</resources>

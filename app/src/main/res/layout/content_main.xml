@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="winter.zxb.smilesb101.coderhome.View.Activitys.MainActivity"
+    tools:showIn="@layout/app_bar_main">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/toolbar"
+    android:background="@color/colorDarkRed"
+    android:orientation="horizontal"
+    >
+    <winter.zxb.smilesb101.coderhome.View.customView.RoundImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/my_headimg"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:id="@+id/headImage"/>
+
+<android.support.design.widget.TabLayout
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:layout_gravity="center"
+    app:tabBackground="@color/colorDarkRed"
+app:tabGravity="center"
+    app:tabIndicatorHeight="0dp"
+    android:id="@+id/tablayout"/>
+
+    <winter.zxb.smilesb101.coderhome.View.customView.RoundImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/my_headimg"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"/>
+</LinearLayout>
+
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/viewPager"></android.support.v4.view.ViewPager>
+
+</LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

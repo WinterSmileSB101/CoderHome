@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="item"
+            type="winter.zxb.smilesb101.coderhome.Bean.NotTextGanioBean"/>
+
+        <variable
+            name="clickLinstener"
+            type="android.view.View.OnClickListener"/>
+    </data>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:onClick="@{clickLinstener}">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp"
+            android:text="@{item.desc}"
+            android:typeface="monospace"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="15dp">
+            <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@mipmap/user_60"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{item.who}"
+                android:typeface="monospace"
+                android:gravity="center_vertical"
+                android:textAlignment="gravity"
+                android:layout_marginLeft="5dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="8sp"/>
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@mipmap/time_machine"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{item.publishedAt}"
+                android:typeface="monospace"
+                android:gravity="center_vertical"
+                android:textAlignment="gravity"
+                android:layout_marginLeft="5dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="8sp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+</layout>
