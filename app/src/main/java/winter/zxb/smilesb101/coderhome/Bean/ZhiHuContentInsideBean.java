@@ -19,12 +19,11 @@ public class ZhiHuContentInsideBean implements Serializable{
 	String image;
 	String share_url;
 	String[] js;
-	String recommenders;
 	String ga_prefix;
-	String section;
 	String type;
 	String id;
 	String[] css;
+	String[] images;
 
 	public String getBody(){
 		return body;
@@ -74,13 +73,6 @@ public class ZhiHuContentInsideBean implements Serializable{
 		this.js = js;
 	}
 
-	public String getRecommenders(){
-		return recommenders;
-	}
-
-	public void setRecommenders(String recommenders){
-		this.recommenders = recommenders;
-	}
 
 	public String getGa_prefix(){
 		return ga_prefix;
@@ -90,13 +82,6 @@ public class ZhiHuContentInsideBean implements Serializable{
 		this.ga_prefix = ga_prefix;
 	}
 
-	public String getSection(){
-		return section;
-	}
-
-	public void setSection(String section){
-		this.section = section;
-	}
 
 	public String getType(){
 		return type;
@@ -120,5 +105,13 @@ public class ZhiHuContentInsideBean implements Serializable{
 
 	public void setCss(String[] css){
 		this.css = css;
+	}
+
+	public String[] getImages(){
+		return images;
+	}
+
+	public void setImages(String[] images){
+		this.images = images;
 	}
 }

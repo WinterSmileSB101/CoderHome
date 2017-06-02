@@ -1,5 +1,7 @@
 package winter.zxb.smilesb101.coderhome.Model;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -31,6 +33,9 @@ import winter.zxb.smilesb101.coderhome.InterfaceAPI.IZhiHuAPI;
  */
 
 public class IZhiHuModel{
+
+	String TAG = "IZhiHuModel";
+
 	public static final IZhiHuModel I_ZHI_HU_MODEL = new IZhiHuModel();
 
 	/**
@@ -151,12 +156,14 @@ public class IZhiHuModel{
 					if(object.getString("type").equals("0"))
 					{
 						//内部消息
+						Log.i(TAG,"onResponse: 内站消息： "+object.toString());
 						ZhiHuContentInsideBean insideBean = gson.fromJson(object.toString(),new TypeToken<ZhiHuContentInsideBean>(){}.getType());//获取对象
 						linstener.onSuccess(insideBean);//交给监听处理
 					}
 					else if(object.getString("type").equals("1"))
 					{
 						//外站消息
+						Log.i(TAG,"onResponse: 外站消息");
 						ZhiHuContentOutSideBean outSideBean = gson.fromJson(object.toString(),new TypeToken<ZhiHuContentOutSideBean>(){}.getType());//获取对象
 						linstener.onSuccess(outSideBean);//交给监听处理
 					}

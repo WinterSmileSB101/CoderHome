@@ -1,5 +1,6 @@
 package winter.zxb.smilesb101.coderhome.View.Activitys;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,7 @@ public class WelcomeActivity extends AppCompatActivity implements IWelcomeView{
 
 	Handler handler;
 	int watiTime;
+	static MainActivity activity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -56,6 +58,17 @@ public class WelcomeActivity extends AppCompatActivity implements IWelcomeView{
 		iBingTodayPresenter = new IBingTodayPresenter(this);
 		iBingTodayPresenter.getBingToday();
 
+		/**
+		 * 执行耗时操作
+		 */
+		new Runnable(){
+			@Override
+			public void run(){
+				activity = new MainActivity();
+				activity.initData();
+			}
+		}.run();
+
 		handler = new Handler();
 		watiTime = 5;
 		waitText.setText(watiTime+"");
@@ -70,7 +83,8 @@ public class WelcomeActivity extends AppCompatActivity implements IWelcomeView{
 			if(watiTime<=0)
 			{
 				//打开主界面
-				startActivity(new Intent(WelcomeActivity.this,MainActivity.class));
+				Log.i(TAG,"run: 打开新界面");
+				startActivity(new Intent(WelcomeActivity.this,activity.getClass()));
 				WelcomeActivity.this.finish();
 				return;
 			}
@@ -84,7 +98,7 @@ public class WelcomeActivity extends AppCompatActivity implements IWelcomeView{
 
 		Log.i(TAG,"ShowTodayBing: ");
 		Glide.with(this)
-				.load(bingToday.getImg_1920())
+				.load(bingToday.getImg_1366())
 				.into(this.bingToday);
 
 		title.setText(bingToday.getTitle());

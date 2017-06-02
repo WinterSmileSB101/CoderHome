@@ -23,6 +23,10 @@
         <activity android:name=".View.Activitys.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity android:name=".View.Activitys.GanioDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".View.Activitys.ZhiHuDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

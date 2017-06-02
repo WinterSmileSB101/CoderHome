@@ -88,7 +88,7 @@ public class ZhiHuDetailsActivity extends AppCompatActivity implements IZhiHuDet
 
 			if(!id.equals(""))
 			{
-				Log.i(TAG,"onCreate: 获取到ID:"+bean.getId());
+				//Log.i(TAG,"onCreate: 获取到ID:"+bean.getId());
 				IPresenter = new IZhiHuStoiesFragmentPresenter(this);
 				IPresenter.getStoriesContentById();
 			}
@@ -151,8 +151,8 @@ public class ZhiHuDetailsActivity extends AppCompatActivity implements IZhiHuDet
 					return true;
 				}
 			});
-			html.getSettings().setUseWideViewPort(true);//设置webview推荐使用的窗口，设置为true
-			html.getSettings().setLoadWithOverviewMode(true);//设置webview加载的页面的模式，也设置为true
+//			html.getSettings().setUseWideViewPort(true);//设置webview推荐使用的窗口，设置为true
+//			html.getSettings().setLoadWithOverviewMode(true);//设置webview加载的页面的模式，也设置为true
 			html.getSettings().setJavaScriptEnabled(true);
 			html.setWebChromeClient(new WebChromeClient(){
 				@Override

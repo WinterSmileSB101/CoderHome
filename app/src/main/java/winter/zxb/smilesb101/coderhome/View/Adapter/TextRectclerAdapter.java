@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,13 +66,13 @@ public class TextRectclerAdapter extends RecyclerView.Adapter{
 		final TextGanioBean bean = textGanioBeanArrayList.get(position);
 		holder1.getDataBinding().setVariable(BR.GanioItem,bean);//绑定数据
 
-		holder1.getDataBinding().setVariable(BR.clickLinstener,new View.OnClickListener(){
+		holder1.getDataBinding().setVariable(BR.clickListener,new View.OnClickListener(){
 			@Override
 			public void onClick(View v){
 				Intent intent = new Intent(activity,GanioDetailsActivity.class);
 				intent.putExtra(GanioDetailsActivity.TextGANIO_KEY,bean);//传递对象
 				context.startActivity(intent);
-//				context.startActivity(intent,ActivityOptionsCompat.makeSceneTransitionAnimation(activity,v,"newsImage").toBundle());//打开新活动
+				//context.startActivity(intent,ActivityOptionsCompat.makeSceneTransitionAnimation(activity,v,"newsImage").toBundle());//打开新活动
 			}
 		});
 

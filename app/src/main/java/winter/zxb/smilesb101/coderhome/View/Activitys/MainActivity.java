@@ -45,16 +45,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		initValue();
 	}
 
-	void initValue()
-	{
+	void initValue(){
 		headImage = (RoundImageView)findViewById(R.id.headImage);
 		headImage.setOnClickListener(this);
 
 		viewPager = (ViewPager)findViewById(R.id.viewPager);
 
 		tabLayout = (TabLayout)findViewById(R.id.tablayout);
-
-		adapter = new MainActivityPagerAdapter(this.getSupportFragmentManager(),this);
+		if(adapter == null) {
+			adapter = new MainActivityPagerAdapter(this.getSupportFragmentManager());
+		}
 
 		setTabLayout();
 		FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
@@ -67,8 +67,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		});
 		DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
 		NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
+		navigationView.setItemIconTintList(null);//显示原本的图标颜色
 		navigationView.setNavigationItemSelectedListener(this);
 
+	}
+
+	void initData()
+	{
+		Log.i(TAG,"initData: 缓存数据");
+		adapter = new MainActivityPagerAdapter(this.getSupportFragmentManager());
 	}
 
 	/**
@@ -129,16 +136,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		// Handle navigation view item clicks here.
 		int id = item.getItemId();
 
-		if(id == R.id.nav_ganio) {
-			// 打开干货界面
-			//Help.cleanSupportFragmentManager(this);
-			//adapter = new MainActivityPagerAdapter(this.getSupportFragmentManager(),this);
-			//setTabLayout();
-		}
-		 else if(id == R.id.nav_share) {
-
-		} else if(id == R.id.nav_send) {
-
+		switch(item.getItemId())
+		{
+			case R.id.nav_home:
+				// 打开首页
+				break;
+			case R.id.nav_discory:
+				// 打开发现
+				break;
+			case R.id.nav_watch:
+				// 打开关注
+				break;
+			case R.id.nav_caogao:
+				// 打开草稿
+				break;
+			case R.id.nav_skin:
+				// 打开皮肤
+				break;
+			case R.id.nav_setting:
+				// 打开设置
+				break;
+			case R.id.nav_send:
+				// 打开反馈
+				break;
+			case R.id.nav_about:
+				// 打开关于
+				break;
 		}
 
 		DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
@@ -166,9 +189,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		ArrayList<FragmentBase> fragmentList;
 		ArrayList<Integer> titleImages;
 		ArrayList<String> titles;
-		Activity activity;
 
-		public MainActivityPagerAdapter(FragmentManager fm,Activity activity){
+
+		public MainActivityPagerAdapter(FragmentManager fm){
 			super(fm);
 			fragmentList = new ArrayList<>();
 			fragmentList.add(GainoFragment.newInstance());//阅读

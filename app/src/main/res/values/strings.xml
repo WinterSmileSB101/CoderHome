@@ -17,4 +17,8 @@
     <string name="ComicName">漫 画 - 小 说</string>
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
+    <string name="home">首页</string>
+    <string name="discory">发现</string>
+    <string name="watch">关注</string>
+    <string name="caogao">草稿</string>
 </resources>

@@ -3,22 +3,48 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_ganio"
-            android:icon="@mipmap/ganio_txt"
-            android:title="@string/GanioName"/>
-    </group>
+            android:id="@+id/nav_home"
+            android:icon="@mipmap/home"
+            android:title="@string/home"></item>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share"/>
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send"/>
-        </menu>
-    </item>
+        <item
+            android:id="@+id/nav_discory"
+            android:icon="@mipmap/discory"
+            android:title="@string/discory"></item>
+
+        <item
+            android:id="@+id/nav_watch"
+            android:icon="@mipmap/watch"
+            android:title="@string/watch"></item>
+
+        <item
+            android:id="@+id/nav_caogao"
+            android:icon="@mipmap/caogao_"
+            android:title="@string/caogao"></item>
+    </group>
+<item android:title="个性化">
+    <menu>
+        <item
+            android:id="@+id/nav_skin"
+            android:icon="@mipmap/skin_blue"
+            android:title="个性换肤"/>
+    </menu>
+</item>
+
+    <group android:id="@+id/system">
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@mipmap/share"
+            android:title="分享"/>
+        <item
+            android:id="@+id/nav_send"
+            android:icon="@mipmap/callback"
+            android:title="反馈"/>
+
+        <item
+             android:id="@+id/nav_about"
+             android:icon="@mipmap/about"
+             android:title="关于"/>
+    </group>
 
 </menu>
