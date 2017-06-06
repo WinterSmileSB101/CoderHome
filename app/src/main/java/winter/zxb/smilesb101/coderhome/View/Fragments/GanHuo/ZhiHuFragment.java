@@ -37,6 +37,7 @@ import winter.zxb.smilesb101.coderhome.View.Activitys.ZhiHuDetailsActivity;
 import winter.zxb.smilesb101.coderhome.View.Adapter.ZhiHuRecyclerViewAdapter;
 import winter.zxb.smilesb101.coderhome.View.Interface.IZhiHuStoriesFragmentView;
 import winter.zxb.smilesb101.coderhome.View.Utils.StaticUtils;
+import winter.zxb.smilesb101.coderhome.View.customView.FullLinearLayoutManager;
 import winter.zxb.smilesb101.coderhome.databinding.ZhihuFragmentLayoutBinding;
 
 
