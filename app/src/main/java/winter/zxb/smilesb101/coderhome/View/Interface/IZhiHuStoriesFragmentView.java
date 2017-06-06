@@ -19,4 +19,5 @@ import winter.zxb.smilesb101.coderhome.Bean.ZhiHuTopStoriesBean;
 public interface IZhiHuStoriesFragmentView extends IZhiHuFragmentViewBase{
 	void showStories(ArrayList<ZhiHuStoriesBean> zhiHuStoriesBeanArrayList);
 	void showTopStories(ArrayList<ZhiHuTopStoriesBean> topStoriesBeanArrayList);
+	String getDate();
 }

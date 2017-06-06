@@ -1,5 +1,7 @@
 package winter.zxb.smilesb101.coderhome.InterfaceAPI;
 
+import android.support.v7.widget.RecyclerView;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -24,4 +26,7 @@ public interface IZhiHuAPI{
 	 */
 	@GET("api/4/news/{param}")
 	Call<ResponseBody> getNewsCall(@Path("param") String param);
+
+	@GET("api/4/news/before/{date}")
+	Call<ResponseBody> getPastNews(@Path("date") String date);
 }

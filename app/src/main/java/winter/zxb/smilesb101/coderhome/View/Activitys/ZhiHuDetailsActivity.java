@@ -27,7 +27,7 @@ import winter.zxb.smilesb101.coderhome.R;
 import winter.zxb.smilesb101.coderhome.View.Interface.IZhiHuDetailsView;
 import winter.zxb.smilesb101.coderhome.databinding.ActivityZhiHuDetailsBinding;
 
-public class ZhiHuDetailsActivity extends AppCompatActivity implements IZhiHuDetailsView{
+public class ZhiHuDetailsActivity extends ThemeBaseActivity implements IZhiHuDetailsView{
 
 	private String TAG = "ZhiHuDetailsActivity";
     ActivityZhiHuDetailsBinding binding;

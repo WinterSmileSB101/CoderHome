@@ -96,14 +96,16 @@ public class WelcomeActivity extends AppCompatActivity implements IWelcomeView{
 	public void ShowTodayBing(BingToday bingToday){
 		//展示信息
 
-		Log.i(TAG,"ShowTodayBing: ");
-		Glide.with(this)
-				.load(bingToday.getImg_1366())
-				.into(this.bingToday);
+		if(!this.isFinishing()) {
+			Log.i(TAG,"ShowTodayBing: ");
+			Glide.with(this)
+					.load(bingToday.getImg_1366())
+					.into(this.bingToday);
 
-		title.setText(bingToday.getTitle());
-		subtitle.setText(bingToday.getSubtitle());
-		desc.setText(bingToday.getDescription());
+			title.setText(bingToday.getTitle());
+			subtitle.setText(bingToday.getSubtitle());
+			desc.setText(bingToday.getDescription());
+		}
 
 
 
@@ -111,7 +113,9 @@ public class WelcomeActivity extends AppCompatActivity implements IWelcomeView{
 
 	@Override
 	public void onError(String error){
-		Log.i(TAG,"ShowTodayBing: ");
-		Toast.makeText(this,error,Toast.LENGTH_LONG).show();
+		if(!this.isFinishing()) {
+			Log.i(TAG,"ShowTodayBing: ");
+			Toast.makeText(this,error,Toast.LENGTH_LONG).show();
+		}
 	}
 }

@@ -2,8 +2,13 @@ package winter.zxb.smilesb101.coderhome.View.Fragments.GanHuo;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+
+import winter.zxb.smilesb101.coderhome.View.Utils.StaticUtils;
 
 /**
  * 项目名称：ViewThisWorld
@@ -21,6 +26,7 @@ public class FragmentBase extends Fragment{
 	protected String TAG;
 	protected String title;
 	protected int titleImage;
+	protected Context ContextWrapper;
 
 	protected static final String TITLE_KEY = "title";
 	protected static final String TITLEIMAGE_KEY = "title";
@@ -47,4 +53,15 @@ public class FragmentBase extends Fragment{
 		return titleImage;
 	}
 
+	@Nullable
+	@Override
+	public View onCreateView(LayoutInflater inflater,@Nullable ViewGroup container,@Nullable Bundle savedInstanceState){
+		this.getThemeWrapper();
+		return super.onCreateView(inflater,container,savedInstanceState);
+	}
+
+	protected void getThemeWrapper()
+	{
+		this.ContextWrapper = StaticUtils.STATIC_UTILS.getTheme(this);
+	}
 }

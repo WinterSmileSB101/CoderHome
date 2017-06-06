@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:typeface="monospace"
-        android:textColor="@color/colorBlack"
+        android:textColor="?attr/titleColor"
         android:textSize="16sp"
         android:maxLines="2"
         android:ellipsize="end"
@@ -50,6 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
+            android:textColor="?attr/titleColor"
             android:textSize="8sp"
             android:typeface="monospace"
             android:text="@{ZhiHuItem.ga_prefix}"/>

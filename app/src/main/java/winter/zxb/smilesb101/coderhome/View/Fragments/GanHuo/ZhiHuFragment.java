@@ -1,13 +1,19 @@
 package winter.zxb.smilesb101.coderhome.View.Fragments.GanHuo;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +23,11 @@ import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Timer;
 
 import winter.zxb.smilesb101.coderhome.Bean.ZhiHuStoriesBean;
 import winter.zxb.smilesb101.coderhome.Bean.ZhiHuTopStoriesBean;
@@ -26,6 +36,7 @@ import winter.zxb.smilesb101.coderhome.R;
 import winter.zxb.smilesb101.coderhome.View.Activitys.ZhiHuDetailsActivity;
 import winter.zxb.smilesb101.coderhome.View.Adapter.ZhiHuRecyclerViewAdapter;
 import winter.zxb.smilesb101.coderhome.View.Interface.IZhiHuStoriesFragmentView;
+import winter.zxb.smilesb101.coderhome.View.Utils.StaticUtils;
 import winter.zxb.smilesb101.coderhome.databinding.ZhihuFragmentLayoutBinding;
 
 
@@ -39,11 +50,18 @@ import winter.zxb.smilesb101.coderhome.databinding.ZhihuFragmentLayoutBinding;
  * 修改备注：
  */
 
-public class ZhiHuFragment extends FragmentBase implements IZhiHuStoriesFragmentView{
+public class ZhiHuFragment extends FragmentBase implements IZhiHuStoriesFragmentView,SwipeRefreshLayout.OnRefreshListener{
 
 	ZhihuFragmentLayoutBinding binding;
 	IZhiHuStoiesFragmentPresenter iZhiHuStoiesFragmentPresenter;
 	RollPagerView banner;
+
+	RecyclerView recyclerView;
+	boolean isLoadData = false;
+	SwipeRefreshLayout refreshLayout;
+
+	onLoadMoreCallBack onLoadMoreCallBack;
+	int year,month,day;
 
 	public static ZhiHuFragment newInstance(){
 
@@ -57,22 +75,33 @@ public class ZhiHuFragment extends FragmentBase implements IZhiHuStoriesFragment
 	{
 		title = "知乎日报";
 		titleImage = R.drawable.tab_zhihu;
+		SimpleDateFormat sdfY = new SimpleDateFormat("yyyy");
+		Log.i(TAG,"ZhiHuFragment: "+sdfY.format(new Date()));
+		year = Integer.parseInt(sdfY.format(new Date()));
+		SimpleDateFormat sdfM = new SimpleDateFormat("yyyyMM");
+		month = Integer.parseInt(sdfM.format(new Date()).replace(sdfY.format(new Date()),""));
+		SimpleDateFormat sdfD = new SimpleDateFormat("yyyyMMdd");
+		day = Integer.parseInt(sdfD.format(new Date()).replace(sdfM.format(new Date()),""));
 	}
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater,@Nullable ViewGroup container,@Nullable Bundle savedInstanceState){
-		binding = DataBindingUtil.inflate(inflater,R.layout.zhihu_fragment_layout,container,false);
+		super.getThemeWrapper();
+		LayoutInflater layoutInflater = inflater.cloneInContext(ContextWrapper);
+		binding = DataBindingUtil.inflate(layoutInflater,R.layout.zhihu_fragment_layout,container,false);
 		rootView = binding.getRoot();
 		rootContext = container.getContext();
-		RecyclerView rv = (RecyclerView)rootView.findViewById(R.id.recyclerView);
-		rv.setLayoutManager(new LinearLayoutManager(container.getContext(),LinearLayoutManager.VERTICAL,false));
+		recyclerView = (RecyclerView)rootView.findViewById(R.id.recyclerView);
+		recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext(),LinearLayoutManager.VERTICAL,false));
+		//recyclerView.setNestedScrollingEnabled(false);
 		banner = (RollPagerView)rootView.findViewById(R.id.banner);
-
 		iZhiHuStoiesFragmentPresenter = new IZhiHuStoiesFragmentPresenter(this);
-		iZhiHuStoiesFragmentPresenter.getLatestStoies();
-		iZhiHuStoiesFragmentPresenter.getLatestTopStoies();
-
+//		refreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.refreshlayout);
+//		refreshLayout.setColorSchemeColors(Color.RED,Color.MAGENTA,Color.YELLOW,Color.BLUE);
+//		refreshLayout.setOnRefreshListener(this);
+//		refreshLayout.setRefreshing(true);
+		onRefresh();
 		return rootView;
 	}
 
@@ -93,20 +122,65 @@ public class ZhiHuFragment extends FragmentBase implements IZhiHuStoriesFragment
 
 	@Override
 	public void onFailure(String error){
-
+		if(!isLoadData)
+		{}
+		else
+		{
+			isLoadData = false;
+			onLoadMoreCallBack.onError(error);
+		}
 	}
 
 	@Override
 	public void showStories(ArrayList<ZhiHuStoriesBean> zhiHuStoriesBeanArrayList){
-
-		binding.setAdapter(new ZhiHuRecyclerViewAdapter(zhiHuStoriesBeanArrayList,this.getActivity()));
+		//refreshLayout.setRefreshing(false);
+		if(!isLoadData) {
+			binding.setAdapter(new ZhiHuRecyclerViewAdapter(zhiHuStoriesBeanArrayList,this,recyclerView));
+		}
+		else
+		{
+			isLoadData = false;
+			onLoadMoreCallBack.onSuccess(zhiHuStoriesBeanArrayList);
+			reduceDay();
+		}
 	}
 
 	@Override
 	public void showTopStories(ArrayList<ZhiHuTopStoriesBean> topStoriesBeanArrayList){
 //		Intent intent = new Intent(rootContext,)
+		//refreshLayout.setRefreshing(false);
 		banner.setAdapter(new TestLoopAdapter(banner,topStoriesBeanArrayList,this.getActivity()));
 	}
+
+	@Override
+	public String getDate(){
+		String m = "";
+		String d = "";
+		if(month<10)
+		{
+			m = "0"+month;
+		}
+		else
+		{
+			m = month+"";
+		}
+		if(day<10)
+		{
+			d = "0"+day;
+		}
+		else {
+			d = day+"";
+		}
+		Log.i(TAG,"getDate: "+year+m+d);
+		return year+m+d;
+	}
+
+	@Override
+	public void onRefresh(){
+		iZhiHuStoiesFragmentPresenter.getLatestStoies();
+		iZhiHuStoiesFragmentPresenter.getLatestTopStoies();
+	}
+
 	private class TestLoopAdapter extends LoopPagerAdapter{
 		private ArrayList<ZhiHuTopStoriesBean> beanArrayList;
 		Intent intent;
@@ -149,6 +223,64 @@ public class ZhiHuFragment extends FragmentBase implements IZhiHuStoriesFragment
 		public int getRealCount() {
 			return beanArrayList.size();
 		}
+	}
+
+	public void LoadMore(onLoadMoreCallBack callBack)
+	{
+		onLoadMoreCallBack = callBack;
+		isLoadData = true;
+		iZhiHuStoiesFragmentPresenter.getPastNews();
+	}
+
+	void reduceDay()
+	{
+		if(day > 1)
+		{
+			day--;
+		}
+		else
+		{
+			month--;
+			switch(month)
+			{
+				case 0:
+					year--;
+					month = 12;
+					day = 31;
+					break;
+				case 1:
+				case 3:
+				case 5:
+				case 7:
+				case 8:
+				case 10:
+				case 12:
+					day = 31;
+					break;
+				case 2:
+					if((year%4==0&&year%100!=0)||(year%400==0))
+					{
+						day = 29;
+					}
+					else
+					{
+						day = 28;
+					}
+					break;
+				case 4:
+				case 6:
+				case 9:
+				case 11:
+					day = 30;
+					break;
+			}
+		}
+	}
+
+	public interface onLoadMoreCallBack{
+		void onSuccess(ArrayList<ZhiHuStoriesBean> storiesBeanArrayList);
+		void onTopSuccess(ArrayList<ZhiHuTopStoriesBean> topStoriesBeanArrayList);
+		void onError(String error);
 	}
 
 }

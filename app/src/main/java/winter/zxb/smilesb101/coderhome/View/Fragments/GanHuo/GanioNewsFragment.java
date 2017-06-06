@@ -46,7 +46,9 @@ public class GanioNewsFragment extends FragmentBase{
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater,@Nullable ViewGroup container,@Nullable Bundle savedInstanceState){
-		NewsFragmentLayoutBinding binding = DataBindingUtil.inflate(inflater,R.layout.news_fragment_layout,container,false);
+		super.getThemeWrapper();
+		LayoutInflater layoutInflater = inflater.cloneInContext(ContextWrapper);
+		NewsFragmentLayoutBinding binding = DataBindingUtil.inflate(layoutInflater,R.layout.news_fragment_layout,container,false);
 		rootView = binding.getRoot();
 		rootContext  = container.getContext();
 		return rootView;

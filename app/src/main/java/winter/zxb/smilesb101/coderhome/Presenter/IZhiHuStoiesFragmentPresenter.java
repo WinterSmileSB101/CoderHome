@@ -81,6 +81,21 @@ public class IZhiHuStoiesFragmentPresenter{
 		});
 	}
 
+	public void getPastNews()
+	{
+		IZhiHuModel.I_ZHI_HU_MODEL.getPastStories(iZhiHuStoriesFragmentView.getDate(),new IZhiHuModel.StoreisListener(){
+			@Override
+			public void onSuccess(ArrayList<ZhiHuStoriesBean> zhiHuStoriesList){
+				iZhiHuStoriesFragmentView.showStories(zhiHuStoriesList);
+			}
+
+			@Override
+			public void onError(String error){
+				iZhiHuStoriesFragmentView.onFailure(error);
+			}
+		});
+	}
+
 	/**
 	 * 获取消息内容
 	 */

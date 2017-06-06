@@ -135,6 +135,39 @@ public class IZhiHuModel{
 		});
 	}
 
+	public void getPastStories(String date,final StoreisListener listener)
+	{
+		Retrofit retrofit = new Retrofit.Builder()
+				.baseUrl("http://news-at.zhihu.com/")
+				.build();
+		IZhiHuAPI iZhiHuAPI = retrofit.create(IZhiHuAPI.class);
+		Call<ResponseBody> call = iZhiHuAPI.getPastNews(date);
+		call.enqueue(new Callback<ResponseBody>(){
+			@Override
+			public void onResponse(Call<ResponseBody> call,Response<ResponseBody> response){
+				//成功
+				try {
+					//Log.i(TAG,"onResponse: "+call.request().url());
+					Gson gson = new Gson();
+					JSONObject object = new JSONObject(response.body().string());
+					ArrayList<ZhiHuStoriesBean> beanArrayList = gson.fromJson(object.getString("stories"),new TypeToken<ArrayList<ZhiHuStoriesBean>>(){}.getType());//获取对象
+
+					listener.onSuccess(beanArrayList);//交给监听处理
+
+				} catch(JSONException e) {
+					e.printStackTrace();
+				} catch(IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void onFailure(Call<ResponseBody> call,Throwable t){
+				listener.onError(t.getMessage());
+			}
+		});
+	}
+
 	/**
 	 * 获取消息内容
 	 */

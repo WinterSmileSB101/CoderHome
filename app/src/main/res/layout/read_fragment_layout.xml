@@ -17,12 +17,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:id="@+id/tablayout"
-                app:tabIndicatorColor="@color/colorRed"
+                app:tabIndicatorColor="?attr/myTabSelecteColor"
                 app:tabIndicatorHeight="2dp"
-                app:tabSelectedTextColor="@color/colorRed"
+                app:tabSelectedTextColor="?attr/myTabSelecteColor"
                 app:tabMode="scrollable"
-                app:tabTextColor="@color/colorBlack"
-                app:tabBackground="@color/colorWrite"></android.support.design.widget.TabLayout>
+                app:tabTextColor="?attr/myTabTextColor"
+                app:tabBackground="?attr/colorPrimary"></android.support.design.widget.TabLayout>
 
     </android.support.design.widget.AppBarLayout>
         <android.support.v4.view.ViewPager

@@ -1,18 +1,23 @@
 package winter.zxb.smilesb101.coderhome.View.Fragments.GanHuo;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import winter.zxb.smilesb101.coderhome.Bean.NotTextGanioBean;
+import winter.zxb.smilesb101.coderhome.Bean.TextGanioBean;
+import winter.zxb.smilesb101.coderhome.Presenter.IGainoTextFragmentPresenter;
 import winter.zxb.smilesb101.coderhome.Presenter.IGanioNotTextFragmentPresenter;
 import winter.zxb.smilesb101.coderhome.R;
 import winter.zxb.smilesb101.coderhome.View.Adapter.ImageRecyclerViewAdapter;
@@ -29,9 +34,20 @@ import winter.zxb.smilesb101.coderhome.databinding.ImageganioRecyclerLayoutBindi
  * 修改备注：
  */
 
-public class ImageGanioFragment extends FragmentBase implements INotTextGanioFragmentView{
+public class ImageGanioFragment extends FragmentBase implements INotTextGanioFragmentView,SwipeRefreshLayout.OnRefreshListener{
 	ImageganioRecyclerLayoutBinding binding;
 	IGanioNotTextFragmentPresenter igNotextParesenter;
+	SwipeRefreshLayout refreshLayout;
+	RecyclerView recyclerView;
+
+	ArrayList<NotTextGanioBean> lastList;
+
+	int NowItemCount = 0;//新闻的条目数（每页的偏移）
+	int NowPage = 1;//新闻的页数
+	boolean isLoadData = false;
+
+	onLoadMoreCallBack onLoadMoreCallBack;
+
 	public static ImageGanioFragment newInstance(){
 
 		Bundle args = new Bundle();
@@ -44,21 +60,43 @@ public class ImageGanioFragment extends FragmentBase implements INotTextGanioFra
 	{
 		title = "福利";
 		titleImage = R.drawable.tab_pic;
+		lastList = new ArrayList<>();
 	}
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater,@Nullable ViewGroup container,@Nullable Bundle savedInstanceState){
-		binding = DataBindingUtil.inflate(inflater,R.layout.imageganio_recycler_layout,container,false);
+		super.getThemeWrapper();
+		LayoutInflater layoutInflater = inflater.cloneInContext(ContextWrapper);
+		binding = DataBindingUtil.inflate(layoutInflater,R.layout.imageganio_recycler_layout,container,false);
 		rootView = binding.getRoot();
 		rootContext = container.getContext();
-		RecyclerView rv = (RecyclerView)rootView.findViewById(R.id.recyclerView);
-		rv.setLayoutManager(new LinearLayoutManager(container.getContext(),LinearLayoutManager.VERTICAL,false));
+		recyclerView = (RecyclerView)rootView.findViewById(R.id.recyclerView);
+		recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext(),LinearLayoutManager.VERTICAL,false));
 
-		igNotextParesenter = new IGanioNotTextFragmentPresenter(this);
-		igNotextParesenter.getAllContent();//获取数据
+		refreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.refreshlayout);
+		refreshLayout.setColorSchemeColors(Color.RED,Color.MAGENTA,Color.YELLOW,Color.BLUE);
+		refreshLayout.setOnRefreshListener(this);
+		refreshLayout.setRefreshing(true);
+		onRefresh();
 
 		return rootView;
+	}
+
+	int getNewItemNum(ArrayList<NotTextGanioBean> list)
+	{
+		if(lastList.size()==0)
+		{
+			return list.size();
+		}
+		int count = 0;
+		for(int i = 0;i<lastList.size();i++)
+		{
+			if(list.get(i).getUrl().equals(lastList.get(i).getUrl()))
+				return count;
+			count++;
+		}
+		return count;
 	}
 
 	@Override
@@ -73,7 +111,15 @@ public class ImageGanioFragment extends FragmentBase implements INotTextGanioFra
 
 	@Override
 	public void onError(String error){
+		if(!isLoadData)
+		{
 
+		}
+		else
+		{
+			isLoadData = false;
+			onLoadMoreCallBack.onError(error);
+		}
 	}
 
 	@Override
@@ -84,6 +130,58 @@ public class ImageGanioFragment extends FragmentBase implements INotTextGanioFra
 	@Override
 	public void showGanio(ArrayList<NotTextGanioBean> ganioBeanArrayList){
 		Log.i(TAG,"showGanio: 图片展示："+ganioBeanArrayList.size());
-		binding.setAdapter(new ImageRecyclerViewAdapter(ganioBeanArrayList));//显示
+		if(!isLoadData) {
+			refreshLayout.setRefreshing(false);
+			Toast.makeText(this.getActivity(),"图片刷新完成，新增数据 "+getNewItemNum(ganioBeanArrayList)+" 条.",Toast.LENGTH_SHORT).show();
+			lastList = ganioBeanArrayList;
+			binding.setAdapter(new ImageRecyclerViewAdapter(ganioBeanArrayList,this,recyclerView));//显示
+		}
+		else
+		{
+			isLoadData = false;
+			onLoadMoreCallBack.onSuccess(ganioBeanArrayList);
+		}
 	}
+
+	public void LoadMore(onLoadMoreCallBack callBack)
+	{
+		isLoadData = true;
+		onLoadMoreCallBack = callBack;
+		NowPage++;
+		igNotextParesenter.getAllContent(NowPage);
+	}
+
+	public void addItemCount()
+	{
+		NowItemCount+=25;
+		if(NowItemCount > 50)
+		{
+			//重置
+			NowItemCount -= 50;
+			NowPage++;
+		}
+	}
+
+	@Override
+	public void onRefresh(){
+		//刷新监听
+		//Log.i(TAG,"onRefresh: 开始刷新");
+		refreshData();
+		//Toast.makeText(this.getActivity(),"操作太快，我跟不上了..",Toast.LENGTH_SHORT);
+	}
+
+	void refreshData()
+	{
+		//refreshLayout.setRefreshing(true);//开始刷新
+		//Log.i(TAG,"refreshData: 刷新数据");
+		igNotextParesenter = new IGanioNotTextFragmentPresenter(this);
+		igNotextParesenter.getAllContent();//获取数据
+	}
+
+
+	public interface onLoadMoreCallBack{
+		void onSuccess(ArrayList<NotTextGanioBean> beanArrayList);
+		void onError(String error);
+	}
+
 }

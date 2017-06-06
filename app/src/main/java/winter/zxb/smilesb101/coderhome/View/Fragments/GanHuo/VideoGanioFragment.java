@@ -1,5 +1,6 @@
 package winter.zxb.smilesb101.coderhome.View.Fragments.GanHuo;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import winter.zxb.smilesb101.coderhome.Presenter.IGanioNotTextFragmentPresenter;
 import winter.zxb.smilesb101.coderhome.R;
 import winter.zxb.smilesb101.coderhome.View.Adapter.VideoRecyclerViewAdapter;
 import winter.zxb.smilesb101.coderhome.View.Interface.INotTextGanioFragmentView;
+import winter.zxb.smilesb101.coderhome.View.Utils.StaticUtils;
 import winter.zxb.smilesb101.coderhome.databinding.VideoGanioFragmentLayoutBinding;
 
 /**
@@ -49,7 +51,9 @@ public class VideoGanioFragment extends FragmentBase implements INotTextGanioFra
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater,@Nullable ViewGroup container,@Nullable Bundle savedInstanceState){
-		binding = DataBindingUtil.inflate(inflater,R.layout.video_ganio_fragment_layout,container,false);
+		super.getThemeWrapper();
+		LayoutInflater layoutInflater = inflater.cloneInContext(ContextWrapper);
+		binding = DataBindingUtil.inflate(layoutInflater,R.layout.video_ganio_fragment_layout,container,false);
 		rootView = binding.getRoot();
 		rootContext = container.getContext();
 		RecyclerView rv = (RecyclerView)rootView.findViewById(R.id.recyclerView);

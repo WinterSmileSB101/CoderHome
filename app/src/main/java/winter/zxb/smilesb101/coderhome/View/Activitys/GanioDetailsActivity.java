@@ -22,7 +22,7 @@ import winter.zxb.smilesb101.coderhome.Bean.TextGanioBean;
 import winter.zxb.smilesb101.coderhome.R;
 import winter.zxb.smilesb101.coderhome.databinding.ActivityGanioDetailsBinding;
 
-public class GanioDetailsActivity extends AppCompatActivity{
+public class GanioDetailsActivity extends ThemeBaseActivity{
     WebView webView;
 	View rootView;
 	TextView errorView;

@@ -65,8 +65,10 @@ public class GainoFragment extends FragmentBase implements IAppFragmentView{
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater,@Nullable ViewGroup container,@Nullable Bundle savedInstanceState){
+		super.getThemeWrapper();
 		rootContext = container.getContext();
-		ReadFragmentLayoutBinding binding = DataBindingUtil.inflate(inflater,R.layout.read_fragment_layout,container,false);
+		LayoutInflater layoutInflater = inflater.cloneInContext(ContextWrapper);
+		ReadFragmentLayoutBinding binding = DataBindingUtil.inflate(layoutInflater,R.layout.read_fragment_layout,container,false);
 		rootView = binding.getRoot();
 		binding.setAdapter(new TextFragmentPageAdapter(this.getChildFragmentManager(),this.channelList));
 		tabLayout = (TabLayout)rootView.findViewById(R.id.tablayout);

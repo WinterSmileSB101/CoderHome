@@ -1,6 +1,7 @@
 package winter.zxb.smilesb101.coderhome.View.Fragments.GanHuo;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -19,6 +21,7 @@ import winter.zxb.smilesb101.coderhome.Presenter.IGainoTextFragmentPresenter;
 import winter.zxb.smilesb101.coderhome.R;
 import winter.zxb.smilesb101.coderhome.View.Adapter.TextRectclerAdapter;
 import winter.zxb.smilesb101.coderhome.View.Interface.ITextGanioFragmentView;
+import winter.zxb.smilesb101.coderhome.View.Utils.StaticUtils;
 
 /**
  * 项目名称：ViewThisWorld
@@ -30,7 +33,7 @@ import winter.zxb.smilesb101.coderhome.View.Interface.ITextGanioFragmentView;
  * 修改备注：
  */
 
-public class TextGanioFragment extends Fragment implements ITextGanioFragmentView{
+public class TextGanioFragment extends Fragment implements ITextGanioFragmentView,SwipeRefreshLayout.OnRefreshListener{
 	View rootView;
 	Context context;
 	RecyclerView recyclerView;
@@ -38,7 +41,15 @@ public class TextGanioFragment extends Fragment implements ITextGanioFragmentVie
 	SwipeRefreshLayout refreshLayout;
 	String type;
 
+	ArrayList<TextGanioBean> lastList;
+
+	int NowItemCount = 0;//新闻的条目数（每页的偏移）
+	int NowPage = 1;//新闻的页数
+	boolean isLoadData = false;
+
 	IGainoTextFragmentPresenter iGainoPresenter;
+
+	onLoaderMoreCallBack onLoaderMoreCallBack;
 
 	static final String TYPE_KEY = "type";
 
@@ -57,20 +68,23 @@ public class TextGanioFragment extends Fragment implements ITextGanioFragmentVie
 	@Override
 	public View onCreateView(LayoutInflater inflater,@Nullable ViewGroup container,@Nullable Bundle savedInstanceState){
 		context = container.getContext();
-		rootView = inflater.inflate(R.layout.text_fragment_layout,container,false);
+		Context ContextWrapper = StaticUtils.STATIC_UTILS.getTheme(this);
+		LayoutInflater layoutInflater = inflater.cloneInContext(ContextWrapper);
+		rootView = layoutInflater.inflate(R.layout.text_fragment_layout,container,false);
 		if(rootView!=null) {
-			//refreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.refreshlayout);//获取刷新控件
 			recyclerView = (RecyclerView)rootView.findViewById(R.id.recyclerView);
 			LinearLayoutManager layout = new LinearLayoutManager(this.context,LinearLayoutManager.VERTICAL, false);
 			recyclerView.setLayoutManager(layout);
+			refreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.refreshlayout);//获取刷新控件
+			refreshLayout.setColorSchemeColors(Color.RED,Color.MAGENTA,Color.YELLOW,Color.BLUE);
+			refreshLayout.setOnRefreshListener(this);
 		}
 		Bundle bundle = getArguments();
 		if(bundle != null) {
-
 			type = bundle.getString(TYPE_KEY);//获取到类型
-			iGainoPresenter = new IGainoTextFragmentPresenter(this);
-			iGainoPresenter.getAllContent();//获取数据
-
+			lastList = new ArrayList<>();
+			refreshLayout.setRefreshing(true);
+			onRefresh();
 		}
 		return rootView;
 	}
@@ -95,14 +109,50 @@ public class TextGanioFragment extends Fragment implements ITextGanioFragmentVie
 
 	@Override
 	public void onError(String error){
+		refreshLayout.setRefreshing(false);
 		//处理错误
+		if(!isLoadData)
+		{
+
+		}
+		else
+		{
+			isLoadData = false;
+			onLoaderMoreCallBack.onError(error);
+		}
 	}
 
 	@Override
 	public void showGanio(ArrayList<TextGanioBean> textGanioBeanArrayList){
 		//展示干货信息
-		adapter = new TextRectclerAdapter(textGanioBeanArrayList,this.getActivity());
-		recyclerView.setAdapter(adapter);
+		if(!isLoadData) {
+			refreshLayout.setRefreshing(false);
+			Toast.makeText(this.getActivity(),type+" 刷新完成，新增数据 "+getNewItemNum(textGanioBeanArrayList)+" 条.",Toast.LENGTH_SHORT).show();
+			lastList = textGanioBeanArrayList;
+			adapter = new TextRectclerAdapter(textGanioBeanArrayList,this,recyclerView);
+			recyclerView.setAdapter(adapter);
+		}
+		else
+		{
+			isLoadData = false;
+			onLoaderMoreCallBack.onSuccess(textGanioBeanArrayList);
+		}
+	}
+
+	int getNewItemNum(ArrayList<TextGanioBean> list)
+	{
+		if(lastList.size()==0)
+		{
+			return list.size();
+		}
+		int count = 0;
+		for(int i = 0;i<lastList.size();i++)
+		{
+			if(list.get(i).getDesc().equals(lastList.get(i).getDesc()))
+				return count;
+			count++;
+		}
+		return count;
 	}
 
 	@Override
@@ -110,4 +160,47 @@ public class TextGanioFragment extends Fragment implements ITextGanioFragmentVie
 		//Log.i(TAG,"getGanioType: 获取频道："+type);
 		return type;
 	}
+
+	public void LoadMore(onLoaderMoreCallBack callBack)
+	{
+		isLoadData = true;
+		onLoaderMoreCallBack = callBack;
+		NowPage++;
+		iGainoPresenter.getAllContent(NowPage);
+	}
+
+	public void addItemCount()
+	{
+		NowItemCount+=25;
+		if(NowItemCount > 50)
+		{
+			//重置
+			NowItemCount -= 50;
+			NowPage++;
+		}
+	}
+
+	@Override
+	public void onRefresh(){
+		//刷新监听
+		//Log.i(TAG,"onRefresh: 开始刷新");
+		refreshData();
+		//Toast.makeText(this.getActivity(),"操作太快，我跟不上了..",Toast.LENGTH_SHORT);
+	}
+
+	void refreshData()
+	{
+		//refreshLayout.setRefreshing(true);//开始刷新
+		//Log.i(TAG,"refreshData: 刷新数据");
+		iGainoPresenter = new IGainoTextFragmentPresenter(this);
+		iGainoPresenter.getAllContent();//获取数据
+	}
+
+	public interface onLoaderMoreCallBack
+	{
+		void onSuccess(ArrayList<TextGanioBean> beanArrayList);
+		void onError(String error);
+	}
+
+
 }

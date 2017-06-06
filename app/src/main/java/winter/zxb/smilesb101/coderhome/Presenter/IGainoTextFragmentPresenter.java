@@ -29,10 +29,50 @@ public class IGainoTextFragmentPresenter{
 		this.iTextGanioFragmentView = iTextGanioFragmentView;
 	}
 
+	public void getAllContent(int count,int page)
+	{
+		iTextGanioFragmentView.showLoading();//显示加载中
+		ITextGanioModel.I_GANIO_MODEL.getAllContent(iTextGanioFragmentView.getGanioType(),count,page,new ITextGanioModel.IGanioListener(){
+			@Override
+			public void onSuccess(ArrayList<TextGanioBean> ganioList){
+				Log.i(TAG,"onSuccess: 获取干货成功类型："+ iTextGanioFragmentView.getGanioType());
+				iTextGanioFragmentView.closeLoding();//加载结束
+				iTextGanioFragmentView.showGanio(ganioList);//调用显示干货
+			}
+
+			@Override
+			public void onError(String error){
+				Log.i(TAG,"onSuccess: 获取干货失败类型："+ iTextGanioFragmentView.getGanioType());
+				iTextGanioFragmentView.closeLoding();//加载结束
+				iTextGanioFragmentView.onError(error);//显示错误信息
+			}
+		});
+	}
+
+	public void getAllContent(int page)
+	{
+		iTextGanioFragmentView.showLoading();//显示加载中
+		ITextGanioModel.I_GANIO_MODEL.getAllContent(iTextGanioFragmentView.getGanioType(),50,page,new ITextGanioModel.IGanioListener(){
+			@Override
+			public void onSuccess(ArrayList<TextGanioBean> ganioList){
+				Log.i(TAG,"onSuccess: 获取干货成功类型："+ iTextGanioFragmentView.getGanioType());
+				iTextGanioFragmentView.closeLoding();//加载结束
+				iTextGanioFragmentView.showGanio(ganioList);//调用显示干货
+			}
+
+			@Override
+			public void onError(String error){
+				Log.i(TAG,"onSuccess: 获取干货失败类型："+ iTextGanioFragmentView.getGanioType());
+				iTextGanioFragmentView.closeLoding();//加载结束
+				iTextGanioFragmentView.onError(error);//显示错误信息
+			}
+		});
+	}
+
 	public void getAllContent()
 	{
 		iTextGanioFragmentView.showLoading();//显示加载中
-		ITextGanioModel.I_GANIO_MODEL.getAllContent(iTextGanioFragmentView.getGanioType(),25,1,new ITextGanioModel.IGanioListener(){
+		ITextGanioModel.I_GANIO_MODEL.getAllContent(iTextGanioFragmentView.getGanioType(),50,1,new ITextGanioModel.IGanioListener(){
 			@Override
 			public void onSuccess(ArrayList<TextGanioBean> ganioList){
 				Log.i(TAG,"onSuccess: 获取干货成功类型："+ iTextGanioFragmentView.getGanioType());

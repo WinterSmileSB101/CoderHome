@@ -24,10 +24,46 @@ public class IGanioNotTextFragmentPresenter{
 		this.iNotTextGanioFragmentView = iNotTextGanioFragmentView;
 	}
 
+	public void getAllContent(int count,int page)
+	{
+		iNotTextGanioFragmentView.showLoading();//显示加载中
+		INotTextGanioModel.I_NOT_TEXT_GANIO_MODEL.getAllContent(iNotTextGanioFragmentView.getGanioType(),count,page,new INotTextGanioModel.NotTextGanioListener(){
+			@Override
+			public void onSuccess(ArrayList<NotTextGanioBean> ganioBeanArrayList){
+				iNotTextGanioFragmentView.closeLoding();
+				iNotTextGanioFragmentView.showGanio(ganioBeanArrayList);
+			}
+
+			@Override
+			public void onError(String error){
+				iNotTextGanioFragmentView.closeLoding();
+				iNotTextGanioFragmentView.onError(error);
+			}
+		});
+	}
+
+	public void getAllContent(int page)
+	{
+		iNotTextGanioFragmentView.showLoading();//显示加载中
+		INotTextGanioModel.I_NOT_TEXT_GANIO_MODEL.getAllContent(iNotTextGanioFragmentView.getGanioType(),50,page,new INotTextGanioModel.NotTextGanioListener(){
+			@Override
+			public void onSuccess(ArrayList<NotTextGanioBean> ganioBeanArrayList){
+				iNotTextGanioFragmentView.closeLoding();
+				iNotTextGanioFragmentView.showGanio(ganioBeanArrayList);
+			}
+
+			@Override
+			public void onError(String error){
+				iNotTextGanioFragmentView.closeLoding();
+				iNotTextGanioFragmentView.onError(error);
+			}
+		});
+	}
+
 	public void getAllContent()
 	{
 		iNotTextGanioFragmentView.showLoading();//显示加载中
-		INotTextGanioModel.I_NOT_TEXT_GANIO_MODEL.getAllContent(iNotTextGanioFragmentView.getGanioType(),25,1,new INotTextGanioModel.NotTextGanioListener(){
+		INotTextGanioModel.I_NOT_TEXT_GANIO_MODEL.getAllContent(iNotTextGanioFragmentView.getGanioType(),50,1,new INotTextGanioModel.NotTextGanioListener(){
 			@Override
 			public void onSuccess(ArrayList<NotTextGanioBean> ganioBeanArrayList){
 				iNotTextGanioFragmentView.closeLoding();

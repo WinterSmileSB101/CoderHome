@@ -19,6 +19,7 @@ import winter.zxb.smilesb101.coderhome.Bean.NotTextGanioBean;
 import winter.zxb.smilesb101.coderhome.R;
 import winter.zxb.smilesb101.coderhome.View.Adapter.NotTextRecyclerAdapter;
 import winter.zxb.smilesb101.coderhome.View.Interface.INotTextGanioFragmentView;
+import winter.zxb.smilesb101.coderhome.View.Utils.StaticUtils;
 
 
 /**
@@ -47,8 +48,10 @@ public class NotTextGanioFragment extends Fragment implements INotTextGanioFragm
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater,@Nullable ViewGroup container,@Nullable Bundle savedInstanceState){
+		Context ContextWrapper = StaticUtils.STATIC_UTILS.getTheme(this);
+		LayoutInflater layoutInflater = inflater.cloneInContext(ContextWrapper);
 		context = container.getContext();
-		rootView = inflater.inflate(R.layout.nottext_fragment_layout,container,false);
+		rootView = layoutInflater.inflate(R.layout.nottext_fragment_layout,container,false);
 		return rootView;
 	}
 

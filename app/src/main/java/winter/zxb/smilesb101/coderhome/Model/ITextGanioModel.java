@@ -64,6 +64,12 @@ public class ITextGanioModel{
 				try {
 					Gson gson = new Gson();
 					JSONObject js = new JSONObject(response.body().string());
+					if(js.getString("results").equals(""))
+					{
+						//数据为空的情况
+						iGanioListener.onSuccess(new ArrayList<TextGanioBean>());
+						return;
+					}
 
 					ArrayList<TextGanioBean> ganioBeenLsit = gson.fromJson(js.getString("results"),new TypeToken<ArrayList<TextGanioBean>>(){}.getType());//获取到Gson
 
