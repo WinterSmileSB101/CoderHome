@@ -2,8 +2,8 @@
 # CoderHome
 码农之家（由干货api和知乎api集合的程序开发新闻app）
 
-## 使用到的技术以及模型： MVP + DataBinding + Glide + Retrofit2.0 + rollviewpager + MaterialDesigner
-## 实现功能：
+# 使用到的技术以及模型： MVP + DataBinding + Glide + Retrofit2.0 + rollviewpager + MaterialDesigner
+# 实现功能：
 1. 干货新闻
 2. 福利图片
 3. 知乎日报
