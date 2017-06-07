@@ -195,11 +195,13 @@
             </LinearLayout>
 
            <TextView
+               android:text="@{aboutbean.lastWords}"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:typeface="monospace"
                android:textColor="?attr/titleColor"
-               android:textSize="14sp"/>
+               android:textSize="14sp"
+               android:layout_marginBottom="15dp"/>
 
             
         </LinearLayout>

@@ -19,6 +19,7 @@ public class ProgrammAboutBean{
 	String programm_version;
 	String programm_desc;
 	Date programm_pubTime;
+	String lastWords;
 	ArrayList<OpenSourceBean> openSourceBeanArrayList;
 	ArrayList<CoderBean> coderBeanArrayList;
 	ArrayList<String> programm_function;
@@ -104,5 +105,13 @@ public class ProgrammAboutBean{
 
 	public void setProgramm_img(int programm_img){
 		this.programm_img = programm_img;
+	}
+
+	public String getLastWords(){
+		return lastWords;
+	}
+
+	public void setLastWords(String lastWords){
+		this.lastWords = lastWords;
 	}
 }
