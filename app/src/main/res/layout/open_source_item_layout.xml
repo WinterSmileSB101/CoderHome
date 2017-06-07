@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="source_item"
+            type="winter.zxb.smilesb101.coderhome.Bean.OpenSourceBean"/>
+    </data>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp">
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/item_pic"
+        android:scaleType="fitCenter"
+        android:layout_marginBottom="5dp"/>
+
+    <TextView
+        android:text="@{source_item.name}"
+        android:id="@+id/item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:typeface="monospace"
+        android:textColor="?attr/titleColor"
+        android:textSize="14sp"></TextView>
+
+    <TextView
+        android:text="@{source_item.url}"
+        android:id="@+id/item_url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:typeface="monospace"
+        android:textColor="?attr/titleColor"
+        android:textSize="14sp"></TextView>
+
+</LinearLayout>
+</layout>

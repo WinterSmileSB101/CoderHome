@@ -22,8 +22,8 @@
         </activity>
         <activity
             android:name=".View.Activitys.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".View.Activitys.GanioDetailsActivity"
@@ -35,6 +35,10 @@
             android:name=".View.Activitys.SkinActivity"
             android:label="@string/title_activity_skin"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".View.Activitys.AboutProgrammAvtivity"
+                  android:theme="@style/AppTheme.NoActionBar"
+            android:label="关于我们">
         </activity>
     </application>
 

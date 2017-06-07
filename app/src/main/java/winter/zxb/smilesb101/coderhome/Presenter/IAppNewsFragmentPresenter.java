@@ -2,7 +2,7 @@ package winter.zxb.smilesb101.coderhome.Presenter;
 
 import java.util.ArrayList;
 
-import winter.zxb.smilesb101.coderhome.InterfaceAPI.IAppModel;
+import winter.zxb.smilesb101.coderhome.Model.IAppModel;
 import winter.zxb.smilesb101.coderhome.View.Interface.IAppFragmentView;
 
 

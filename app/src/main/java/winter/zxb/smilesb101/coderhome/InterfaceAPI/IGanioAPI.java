@@ -4,6 +4,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * 项目名称：ViewThisWorld
@@ -32,4 +33,7 @@ public interface IGanioAPI{
  */
 @GET("api/search/query/listview/category/{class}/count/{count}/page/{page}")
 Call<ResponseBody> searchCall(@Path("class") String classify,@Path("count") String count,@Path("page") String page);
+//https://gank.io/api/add2gank?url="baidu.com"&desc="asdasd"&who="891532752"&type="iOS"&debug=true
+	@GET("api/add2gank")
+	Call<ResponseBody> addCall(@Query("url") String url,@Query("desc") String desc,@Query("who") String who,@Query("type") String type,@Query("debug") boolean debug);
 }

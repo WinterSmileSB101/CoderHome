@@ -95,13 +95,9 @@ public class ZhiHuFragment extends FragmentBase implements IZhiHuStoriesFragment
 		rootContext = container.getContext();
 		recyclerView = (RecyclerView)rootView.findViewById(R.id.recyclerView);
 		recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext(),LinearLayoutManager.VERTICAL,false));
-		//recyclerView.setNestedScrollingEnabled(false);
+
 		banner = (RollPagerView)rootView.findViewById(R.id.banner);
 		iZhiHuStoiesFragmentPresenter = new IZhiHuStoiesFragmentPresenter(this);
-//		refreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.refreshlayout);
-//		refreshLayout.setColorSchemeColors(Color.RED,Color.MAGENTA,Color.YELLOW,Color.BLUE);
-//		refreshLayout.setOnRefreshListener(this);
-//		refreshLayout.setRefreshing(true);
 		onRefresh();
 		return rootView;
 	}
@@ -172,7 +168,7 @@ public class ZhiHuFragment extends FragmentBase implements IZhiHuStoriesFragment
 		else {
 			d = day+"";
 		}
-		Log.i(TAG,"getDate: "+year+m+d);
+		//Log.i(TAG,"getDate: "+year+m+d);
 		return year+m+d;
 	}
 

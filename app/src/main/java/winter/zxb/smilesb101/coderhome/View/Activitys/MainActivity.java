@@ -165,6 +165,7 @@ public class MainActivity extends ThemeBaseActivity implements View.OnClickListe
 				break;
 			case R.id.nav_about:
 				// 打开关于
+				startActivity(new Intent(this,AboutProgrammAvtivity.class));
 				break;
 		}
 

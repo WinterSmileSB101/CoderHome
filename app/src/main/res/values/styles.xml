@@ -42,6 +42,10 @@
     <!--白天主题-->
     <style name="DayTheme" parent="@style/Theme.AppCompat.NoActionBar">
 
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+
         <!--菜单中分栏的颜色-->
         <item name="android:actionMenuTextColor">@color/colorSlateGray</item>
 
@@ -80,6 +84,11 @@
 
     <!--夜间主题-->
     <style name="NightTheme" parent="@style/Theme.AppCompat.NoActionBar">
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+
         <item name="colorPrimary">@color/colorBlack</item>
         <item name="colorPrimaryDark">#161823</item>
         <item name="colorAccent">#00796B</item>
@@ -116,6 +125,11 @@
 
     <!--原谅主题（翡翠绿）-->
     <style name="GreenTheme" parent="@style/Theme.AppCompat.NoActionBar">
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+
         <item name="colorPrimary">#00cca4</item>
         <item name="colorPrimaryDark">#00796B</item>
         <item name="colorAccent">#00cca4</item>

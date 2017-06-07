@@ -176,7 +176,7 @@ public class ImageRecyclerViewAdapter extends RecyclerView.Adapter{
 
 	@Override
 	public int getItemCount(){
-		Log.i(TAG,"getItemCount: 数量："+ganioBeanArrayList.size());
+		//Log.i(TAG,"getItemCount: 数量："+ganioBeanArrayList.size());
 		return ganioBeanArrayList.size()+1;
 	}
 

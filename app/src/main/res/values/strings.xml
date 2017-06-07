@@ -22,4 +22,7 @@
     <string name="watch">关注</string>
     <string name="caogao">草稿</string>
     <string name="title_activity_skin">个性换肤</string>
+    <string name="developTeam">开发团队</string>
+    <string name="opeansource">开源许可</string>
+    <string name="lastWords">最后说几句</string>
 </resources>
