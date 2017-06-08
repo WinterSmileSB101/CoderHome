@@ -204,7 +204,9 @@ public class ZhiHuFragment extends FragmentBase implements IZhiHuStoriesFragment
 	public void showTopStories(ArrayList<ZhiHuTopStoriesBean> topStoriesBeanArrayList){
 //		Intent intent = new Intent(rootContext,)
 		//refreshLayout.setRefreshing(false);
-		banner.setAdapter(new TestLoopAdapter(banner,topStoriesBeanArrayList,this.getActivity()));
+		if(topStoriesBeanArrayList!=null && topStoriesBeanArrayList.size()>0) {
+			banner.setAdapter(new TestLoopAdapter(banner,topStoriesBeanArrayList,this.getActivity()));
+		}
 	}
 
 	@Override

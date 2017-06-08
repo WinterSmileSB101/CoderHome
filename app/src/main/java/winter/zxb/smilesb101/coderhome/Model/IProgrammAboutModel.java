@@ -58,7 +58,7 @@ public class IProgrammAboutModel{
 		openSourceBeen.add(new OpenSourceBean("Gson","https://github.com/google/gson",R.mipmap.gson));
 		bean.setOpenSourceBeanArrayList(openSourceBeen);
 
-		bean.setProgramm_img(R.mipmap.ic_launcher);
+		bean.setProgramm_img(R.mipmap.app);
 
 		bean.setProgramm_pubTime(new Date());
 
