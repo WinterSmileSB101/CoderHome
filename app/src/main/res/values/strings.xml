@@ -1,4 +1,7 @@
 <resources>
+
+    <string name="scale_up_show_behavior">winter.zxb.smilesb101.coderhome.View.Behaviour.ShowTopBehaviour</string>
+
     <string name="app_name">码农之家</string>
 
     <string name="action_settings">设置</string>

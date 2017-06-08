@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +38,7 @@ import winter.zxb.smilesb101.coderhome.R;
 import winter.zxb.smilesb101.coderhome.View.Activitys.ZhiHuDetailsActivity;
 import winter.zxb.smilesb101.coderhome.View.Adapter.ZhiHuRecyclerViewAdapter;
 import winter.zxb.smilesb101.coderhome.View.Interface.IZhiHuStoriesFragmentView;
+import winter.zxb.smilesb101.coderhome.View.Utils.AnimationUtils;
 import winter.zxb.smilesb101.coderhome.View.Utils.StaticUtils;
 import winter.zxb.smilesb101.coderhome.View.customView.FullLinearLayoutManager;
 import winter.zxb.smilesb101.coderhome.databinding.ZhihuFragmentLayoutBinding;
@@ -63,6 +66,35 @@ public class ZhiHuFragment extends FragmentBase implements IZhiHuStoriesFragment
 
 	onLoadMoreCallBack onLoadMoreCallBack;
 	int year,month,day;
+
+	private boolean isAnimatingOut = false;
+
+	ViewPropertyAnimatorListener viewPropertyAnimatorListener = new ViewPropertyAnimatorListener() {
+
+		@Override
+		public void onAnimationStart(View view) {
+			isAnimatingOut = true;
+		}
+
+		@Override
+		public void onAnimationEnd(View view) {
+			isAnimatingOut = false;
+			view.setVisibility(View.GONE);
+		}
+
+		@Override
+		public void onAnimationCancel(View arg0) {
+			isAnimatingOut = false;
+		}
+	};
+
+	View.OnClickListener fab_cilckListener = new View.OnClickListener(){
+		@Override
+		public void onClick(View v){
+			if(recyclerView!=null)
+				recyclerView.smoothScrollToPosition(0);
+		}
+	};
 
 	public static ZhiHuFragment newInstance(){
 
@@ -93,8 +125,34 @@ public class ZhiHuFragment extends FragmentBase implements IZhiHuStoriesFragment
 		binding = DataBindingUtil.inflate(layoutInflater,R.layout.zhihu_fragment_layout,container,false);
 		rootView = binding.getRoot();
 		rootContext = container.getContext();
+		final FloatingActionButton fab = (FloatingActionButton)rootView.findViewById(R.id.fab);
+		fab.setOnClickListener(fab_cilckListener);
+		fab.setScaleX(0.0f);
+		fab.setScaleY(0.0f);
+		fab.setAlpha(0.0f);
+		fab.setVisibility(View.GONE);
 		recyclerView = (RecyclerView)rootView.findViewById(R.id.recyclerView);
-		recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext(),LinearLayoutManager.VERTICAL,false));
+		LinearLayoutManager layout = new LinearLayoutManager(this.rootContext,LinearLayoutManager.VERTICAL, false);
+		recyclerView.setLayoutManager(layout);
+		recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener(){
+			@Override
+			public void onScrolled(RecyclerView recyclerView,int dx,int dy){
+				super.onScrolled(recyclerView,dx,dy);
+				if(((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition()==0)
+				{
+					if(fab.getVisibility()!=View.GONE && !isAnimatingOut) {
+						AnimationUtils.scaleHide(fab,viewPropertyAnimatorListener);
+					}
+				}
+				else
+				{
+					if(fab.getVisibility()!=View.VISIBLE)
+						AnimationUtils.scaleShow(fab,null);
+				}
+			}
+		});
+//		recyclerView = (RecyclerView)rootView.findViewById(R.id.recyclerView);
+//		recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext(),LinearLayoutManager.VERTICAL,false));
 
 		banner = (RollPagerView)rootView.findViewById(R.id.banner);
 		iZhiHuStoiesFragmentPresenter = new IZhiHuStoiesFragmentPresenter(this);

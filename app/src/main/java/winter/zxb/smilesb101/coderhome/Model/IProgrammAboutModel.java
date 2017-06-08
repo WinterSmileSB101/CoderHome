@@ -44,9 +44,6 @@ public class IProgrammAboutModel{
 		funcs = new ArrayList();
 		funcs.add("MVP");
 		funcs.add("DataBinding");
-		funcs.add("Glide");
-		funcs.add("Retrofit2.0");
-		funcs.add("rollviewpager");
 		funcs.add("Material Designer");
 		bean.setProgramm_tecs(funcs);
 
