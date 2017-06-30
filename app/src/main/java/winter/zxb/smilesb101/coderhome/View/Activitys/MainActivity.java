@@ -153,6 +153,9 @@ public class MainActivity extends ThemeBaseActivity implements View.OnClickListe
 			case R.id.nav_caogao:
 				// 打开草稿
 				break;
+			case R.id.nav_tulingRabit:
+				//打开图灵机器人界面
+				break;
 			case R.id.nav_skin:
 				// 打开皮肤界面
 				startActivity(new Intent(this,SkinActivity.class));

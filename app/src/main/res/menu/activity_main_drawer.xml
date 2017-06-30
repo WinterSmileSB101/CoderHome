@@ -22,6 +22,13 @@
             android:icon="@mipmap/caogao_"
             android:title="@string/caogao"></item>
     </group>
+
+    <group android:id="@+id/expands">
+        <item android:id="@+id/nav_tulingRabit"
+            android:icon="@mipmap/tuling"
+            android:title="@string/tulingRabit"/>
+    </group>
+
 <item android:title="个性化">
     <menu>
         <item

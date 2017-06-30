@@ -55,6 +55,10 @@ public class StaticUtils{
 					break;
 			}
 		}
+		else{
+			//默认主题
+			activity.setTheme(R.style.DayTheme);
+		}
 	}
 
 	public Context getTheme(Fragment fragment)
@@ -78,7 +82,7 @@ public class StaticUtils{
 					return new ContextThemeWrapper(activity,R.style.GreenTheme);
 			}
 		}
-		return null;
+		return new ContextThemeWrapper(activity,R.style.DayTheme);//此处也返回默认主题（解决首次安装出现的BUG，由于没有配置文件的存在，所以直接崩溃的问题）
 	}
 
 }
